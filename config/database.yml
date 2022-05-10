@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
-  username: postgres # TODO
-  password: postgres # TODO
+  username: <%= ENV['DATABASE_USERNAME'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
   encoding: unicode
   pool: 5
   timeout: 5000

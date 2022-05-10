@@ -1,11 +1,33 @@
-class ImportUsers < ApplicationService  
-  def initialize; end
+class ImportUsers < ApplicationService    
+  attr_accessor :step
+  attr_accessor :limit
+
+  def initialize
+    @step = 20
+    @limit = 20
+  end
 
   def call
-    users_response = MicroverseClient.instance.get_users
-    # TODO: Handle error
+    offset = 0
+    users = get_users(offset: offset)
+    while users.any?
+      users = get_users(offset: offset)
+      create_users_from_microverse_users(users)
+      offset += @step
+    end
+  end
 
-    users = MicroverseUser.fromJSONArray(users_response)
+  private
+
+  def get_users(offset:)
+    MicroverseUser.from_json_array(
+      MicroverseClient.instance.get_users(
+        limit: @limit, offset: offset
+      ) # TODO: Handle error
+    )
+  end
+
+  def create_users_from_microverse_users(users)
     users.each do |user|
       User.create!(user.to_h)
     end

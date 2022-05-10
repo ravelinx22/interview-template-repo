@@ -23,7 +23,7 @@ class MicroverseUser
   end
 
   class << self
-    def fromJSONArray(jsonArray)
+    def from_json_array(jsonArray)
       jsonArray.map{ |user| MicroverseUser.fromJSONObject(user) }
     end
 
