@@ -116,7 +116,9 @@ RSpec.describe "Admin Users actions", type: :feature do
 
     context 'when user does not exist' do
       it 'should display error' do
-        #expect(page).to have_content("James")
+        visit "/admin/users/fake"
+
+        expect(page).to have_content("404 Not found")
       end
     end
   end

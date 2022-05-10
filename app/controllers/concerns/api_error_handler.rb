@@ -1,4 +1,4 @@
-module ErrorHandler
+module ApiErrorHandler
   extend ActiveSupport::Concern
 
   def self.included(clazz)
@@ -7,6 +7,7 @@ module ErrorHandler
       rescue_from StandardError do |e|
         unexpected_error(e)
       end
+      rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
       rescue_from Errors::GenericError do |e|
         respond(e.status, e.message)
       end
@@ -17,6 +18,10 @@ module ErrorHandler
 
   def respond(status, message)
     render json: { mssg: message }, status: status
+  end
+
+  def record_not_found
+    respond(:not_found, 'Record not found')
   end
 
   def missing_parameters
