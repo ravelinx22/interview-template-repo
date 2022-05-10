@@ -20,11 +20,12 @@ class ImportUsersService < ApplicationService
   private
 
   def get_users(offset:)
-    MicroverseUser.from_json_array(
-      MicroverseClient.instance.get_users(
-        limit: @limit, offset: offset
-      ) # TODO: Handle error
-    )
+    users_json = MicroverseClient.instance.get_users(
+      limit: @limit, offset: offset
+    ) 
+    raise Errors::ImportingUsersError if users_json.blank?
+
+    MicroverseUser.from_json_array(users_json)
   end
 
   def create_users_from_microverse_users(users)
