@@ -7,7 +7,19 @@ module Api
       ), each_serializer: UserSerializer
     end
 
+    def show
+      render json: user, serializer: UserSerializer
+    end
+
     private
+
+    def user
+      @user = User.find(user_params[:id])
+    end
+
+    def user_params
+      params.permit(:id)
+    end
 
     def filter_params
       params.permit(
