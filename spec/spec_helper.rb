@@ -1,5 +1,6 @@
 require 'capybara/rspec'
 require 'support/request_helpers'
+require 'sidekiq/testing'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -11,12 +12,27 @@ RSpec.configure do |config|
   end
 
   config.before(:suite) do
+    Sidekiq::Testing.fake!
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
 
   config.before(:each) do
     DatabaseCleaner.start
+    Sidekiq::Worker.clear_all
+    allow_any_instance_of(MicroverseClient).to receive(:get_users).with(
+      {:limit=>20, :offset=>0}
+    ).and_return([{
+      "id": 1,
+      "first_name": "Merlin",
+      "last_name": "Sawayn",
+      "status": "Active",
+      "created_at": "2020-09-30T20:12:46.769Z",
+      "email": "juliusjohns@mcclure.net"
+    }].as_json)
+    allow_any_instance_of(MicroverseClient).to receive(:get_users).with(
+      {:limit=>20, :offset=>20}
+    ).and_return([].as_json)
   end
 
   config.after(:each) do

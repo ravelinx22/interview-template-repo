@@ -23,8 +23,6 @@ class ImportUsersService < ApplicationService
     users_json = MicroverseClient.instance.get_users(
       limit: @limit, offset: offset
     ) 
-    raise Errors::ImportingUsersError if users_json.blank?
-
     MicroverseUser.from_json_array(users_json)
   end
 
