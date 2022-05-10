@@ -19,12 +19,12 @@
     <tbody>
       <% @users.each do |user| %>
         <tr>
-          <th><span><%= user.id %></span></th> 
-          <td><span><%= user.first_name %></span></th> 
-          <td><span><%= user.last_name %></span></th> 
-          <td><span><%= user.status %></span></th> 
-          <td><span><%= user.email %></span></th> 
-          <td><span><%= user.created_at %></span></th> 
+          <th><span class="user_id"><%= user.id %></span></th> 
+          <td><span class="user_first_name"><%= user.first_name %></span></th> 
+          <td><span class="user_last_name"><%= user.last_name %></span></th> 
+          <td><span class="user_status"><%= user.status %></span></th> 
+          <td><span class="user_email"><%= user.email %></span></th> 
+          <td><span class="user_created_at"><%= user.created_at %></span></th> 
           <td>
             <%= link_to 'Detail', admin_user_path(user), class: "btn btn-primary" %>
           </td> 
