@@ -1,1 +1,38 @@
-<p>Index users</p>
+<div class="container">
+  <%= form_tag admin_users_path, method: 'get' do %>
+    <%= select_tag :status, options_for_select([nil, "Active", "Inactive" ], nil) %>
+    <%= submit_tag 'Filter' %>
+  <% end %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th><span>ID</span></th> 
+        <th><span>First name</span></th> 
+        <th><span>Last name</span></th> 
+        <th><span>Status</span></th> 
+        <th><span>Email</span></th> 
+        <th><span>Created at</span></th> 
+        <th><span>Detail</span></th> 
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <th><span><%= user.id %></span></th> 
+          <td><span><%= user.first_name %></span></th> 
+          <td><span><%= user.last_name %></span></th> 
+          <td><span><%= user.status %></span></th> 
+          <td><span><%= user.email %></span></th> 
+          <td><span><%= user.created_at %></span></th> 
+          <td>
+            <%= link_to 'Detail', admin_user_path(user), class: "btn btn-primary" %>
+          </th> 
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="digg_pagination">
+      <%= will_paginate @users, :container => false %>
+  </div>
+</div>
