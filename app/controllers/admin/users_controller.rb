@@ -8,10 +8,18 @@ module Admin
     end
 
     def show
-      @name = "James"
+      @user = user
     end
 
     private
+
+    def user
+      User.find(user_params[:id])
+    end
+
+    def user_params
+      params.permit(:id)
+    end
     
     def filter_params
       params.permit(
