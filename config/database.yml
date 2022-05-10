@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
-  username: postgres
-  password: postgres
+  username: postgres # TODO
+  password: postgres # TODO
   encoding: unicode
   pool: 5
   timeout: 5000
