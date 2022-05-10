@@ -24,10 +24,10 @@ class MicroverseUser
 
   class << self
     def from_json_array(jsonArray)
-      jsonArray.map{ |user| MicroverseUser.fromJSONObject(user) }
+      jsonArray.map{ |user| MicroverseUser.from_json_object(user) }
     end
 
-    def fromJSONObject(json)
+    def from_json_object(json)
       MicroverseUser.new(
         id: json['id'],
         first_name: json['first_name'],

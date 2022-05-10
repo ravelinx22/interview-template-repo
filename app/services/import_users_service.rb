@@ -1,4 +1,4 @@
-class ImportUsers < ApplicationService    
+class ImportUsersService < ApplicationService    
   attr_accessor :step
   attr_accessor :limit
 
